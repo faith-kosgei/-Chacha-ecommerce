@@ -32,11 +32,12 @@ function CheckAuth({ isAuthenticated, user, children }) {
   }
   if (
     isAuthenticated &&
-    useer?.role === "admin" &&
+    user?.role === "admin" &&
     location.pathname.includes('shopping')
   ) {
     return <Navigate to="/admin/dashboard" />;
   }
+  return <>{children}</>;
 }
 
 export default CheckAuth;
