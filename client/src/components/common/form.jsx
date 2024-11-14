@@ -4,13 +4,24 @@ import {
   SelectValue,
 } from "@radix-ui/react-select";
 import { Textarea } from "../ui/textarea";
+import { Input } from "../ui/input";
+import {Button} from "../ui/button";
 
 function CommonForm({ formControls, formData, setFormData, onSubmit, buttonText }) {
   function renderInputsByComponentType(getControlItem) {
-    let element = null;
+   
     const value = formData[getControlItem.name] || ''
 
+     // Function to handle input changes
+     const handleChange = (e) => {
+      const { name, value } = e.target;
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    };
 
+    let element = null;
     switch (getControlItem.componentType) {
       case "input":
         element = (
@@ -20,6 +31,7 @@ function CommonForm({ formControls, formData, setFormData, onSubmit, buttonText 
             id={getControlItem.name}
             type={getControlItem.type}
             value={value}
+            onChange={handleChange}
           />
         );
 
@@ -50,6 +62,7 @@ function CommonForm({ formControls, formData, setFormData, onSubmit, buttonText 
             placeholder={getControlItem.placeholder}
             id={getControlItem.name}
             value={value}
+            onChange={handleChange}  // handle textarea changes
             
           />
         );
@@ -63,6 +76,8 @@ function CommonForm({ formControls, formData, setFormData, onSubmit, buttonText 
             placeholder={getControlItem.placeholder}
             id={getControlItem.name}
             type={getControlItem.type}
+            value={value}
+            onChange={handleChange} // handle input changes 
           />
         );
         break;
